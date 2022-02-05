@@ -39,7 +39,7 @@ function Todo(){
 
     function onItemDeleted(item){
 
-        let filteredItems = items.filter(it => it.id != item.id);
+        let filteredItems = items.filter(it => it.id !== item.id);
 
         setItems(filteredItems);
     }
