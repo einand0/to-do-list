@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.container{
+    margin: auto;
+    min-height: 100vh;
+    max-width: 500px;
+    background-color:#4C956C;
+    padding: 0px 50px;
+}
+
+#icon-lixeira, #done, #undone{
+    width: 20px;
+}
+
+.done{
+    text-decoration: line-through;
+}
+
+ul{
+    list-style: none;
+}
+
+ul > div > li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #FEFEE3;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.card{
+    padding: 5px;
+    border: 1px solid #86C19F;
+    box-shadow: 0px 0px 7px #1D4930;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.header{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.header > h1{
+    color:#FFB199;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-shadow: 0px 0px 8px #FFB199;
+}
+
+.addButton{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border-style: none;
+    background-color: #2C6E49;
+    font-size: 20px;
+    color: #FEFEE3;
+}
+
+.addButton:hover{
+    background-color: #1D4930;
+    cursor: pointer;
+}
+
+.modal{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.137);
+    top: 0;
+    left:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.hiddenModal{
+    display: none;
+}
+
+form{
+    background-color: #FFC9B9;
+    border-radius:5px;
+    padding: 20px;
+}
+
+input[type="text"]{
+    background-color: #FEFEE3;
+    border-style: none;
+    padding: 5px;
+}
+
+input[type="text"]:focus{
+    outline: none;
+}
+
+form > button{
+    background-color: #D68C45;
+    border-style: none;
+    padding: 5px;
+    color: #FEFEE3;
+}
+
+form > button:hover{
+    background-color: #C9782C;
+    cursor: pointer;
+}
