@@ -111,3 +111,14 @@ form{
   text-decoration: line-through;
   opacity: 0.5;
 }
+
+.no-tasks{
+  background-color: #0e2646;
+  width: 400px;
+  max-width: 50%;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: #fff;
+  font-weight: 500;
+}

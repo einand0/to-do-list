@@ -7,19 +7,9 @@ import { FaToggleOff, FaToggleOn } from "react-icons/fa6";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
-  const [filteredTasks, setFilteredTasks] = useState([]);
   const inputTitle = useRef();
   const inputDescription = useRef();
   const formRef = useRef();
-
-  function onChangeSearch(e) {
-    setSearchTitle(e.target.value);
-    setFilteredTasks(
-      tasks.filter((task) =>
-        task.title.toUpperCase().includes(searchTitle.toUpperCase())
-      )
-    );
-  }
 
   async function doneTask(id) {
     const taskWrapper = await api.get(`/tasks/?id=${id}`);
@@ -57,7 +47,7 @@ function App() {
 
   useEffect(() => {
     getTasks();
-  }, [filteredTasks, searchTitle]);
+  }, []);
 
   return (
     <div className="container">
@@ -76,14 +66,19 @@ function App() {
 
       <div className="search-wrapper">
         <input
+          value={searchTitle}
           placeholder="Procurar tarefa"
-          onChange={(e) => onChangeSearch(e)}
+          onChange={(e) => setSearchTitle(e.target.value)}
         />
         <FaSearch color="#f87060" />
       </div>
 
-      {filteredTasks.length == 0
-        ? tasks.map((task) => (
+      {tasks.length > 0 ? (
+        tasks
+          .filter((task) =>
+            task.title.toLowerCase().includes(searchTitle.toLowerCase())
+          )
+          .map((task) => (
             <div className="task" key={task.id}>
               {task.done == true ? (
                 <div>
@@ -110,33 +105,9 @@ function App() {
               </div>
             </div>
           ))
-        : filteredTasks.map((task) => (
-            <div className="task" key={task.id}>
-              {task.done == true ? (
-                <div>
-                  <h2 className="done">{task.title}</h2>
-                  <p className="done">{task.description}</p>
-                </div>
-              ) : (
-                <div>
-                  <h2>{task.title}</h2>
-                  <p>{task.description}</p>
-                </div>
-              )}
-              <div className="done-button-wrapper">
-                <button onClick={() => doneTask(task.id)}>
-                  {task.done == true ? (
-                    <FaToggleOn size={20} />
-                  ) : (
-                    <FaToggleOff size={20} />
-                  )}
-                </button>
-                <button onClick={() => deleteTask(task.id)}>
-                  <FaTrash size={20} />
-                </button>
-              </div>
-            </div>
-          ))}
+      ) : (
+        <div className="no-tasks">Nenhuma tarefa cadastrada :(</div>
+      )}
     </div>
   );
 }
