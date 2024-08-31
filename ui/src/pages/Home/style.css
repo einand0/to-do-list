@@ -6,6 +6,7 @@
   padding-top: 120px;
 }
 
+
 h1{
   color: #cdd7d6;
   text-align: center;
@@ -76,4 +77,15 @@ form{
     color: #f87060;
     cursor: pointer;
   }
+}
+
+.done-button-wrapper{
+  display: flex;
+  gap: 10px;
+}
+
+
+.done{
+  text-decoration: line-through;
+  opacity: 0.5;
 }

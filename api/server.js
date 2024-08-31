@@ -9,11 +9,27 @@ app.use(express.json())
 app.use(cors())
 
 
+app.put('/tasks/:id', async (req, res) => {
+    await prisma.task.update({
+        where: {
+            id: req.params.id
+        },
+        data: {
+            title: req.body.title,
+            description: req.body.description,
+            done: req.body.done
+        }
+    })
+
+    res.send(201)
+})
+
 app.post('/tasks', async (req, res) => {
     await prisma.task.create({
         data: {
             title: req.body.title,
-            description: req.body.description
+            description: req.body.description,
+            done: req.body.done
         }
     })
 
@@ -22,7 +38,18 @@ app.post('/tasks', async (req, res) => {
 
 app.get('/tasks', async (req, res) => {
 
-    const tasks = await prisma.task.findMany();
+    let tasks = []
+
+    if(req.query){
+        tasks = await prisma.task.findMany({
+            where: {
+                id: req.query.id
+            }
+        })
+    } else{
+        tasks = await prisma.task.findMany()
+    }
+
     res.status(200).json(tasks)
 })
 
