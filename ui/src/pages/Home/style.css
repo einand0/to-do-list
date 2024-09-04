@@ -122,3 +122,14 @@ form{
   color: #fff;
   font-weight: 500;
 }
+
+.inputWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputError{
+  color: #f87060;
+  font-size: 12px;
+}

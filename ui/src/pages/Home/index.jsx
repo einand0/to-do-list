@@ -1,15 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./style.css";
 import { FaTrash, FaSearch } from "react-icons/fa";
 import { FaToggleOff, FaToggleOn } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
-  const inputTitle = useRef();
-  const inputDescription = useRef();
-  const formRef = useRef();
+  const [inputTitle, setInputTitle] = useState();
+  const [inputDescription, setInputDescription] = useState();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  function onSubmit() {
+    createTask();
+  }
 
   async function doneTask(id) {
     const taskWrapper = await api.get(`/tasks/?id=${id}`);
@@ -31,12 +41,11 @@ function App() {
 
   async function createTask() {
     await api.post("/tasks", {
-      title: inputTitle.current.value,
-      description: inputDescription.current.value,
+      title: inputTitle,
+      description: inputDescription,
     });
 
-    formRef.current.reset();
-
+    reset();
     getTasks();
   }
 
@@ -49,19 +58,41 @@ function App() {
     getTasks();
   }, []);
 
+  console.log(errors.inputTitle);
+
   return (
     <div className="container">
-      <form ref={formRef}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1>to-do-list</h1>
-        <input placeholder="Tarefa" name="task" ref={inputTitle} />
-        <input
-          placeholder="Descrição da tarefa"
-          name="description"
-          ref={inputDescription}
-        />
-        <button type="button" onClick={createTask}>
-          Enviar
-        </button>
+        <div className="inputWrapper">
+          <input
+            placeholder="Tarefa"
+            name="task"
+            {...register("inputTitle", { required: true })}
+            onChange={(e) => setInputTitle(e.target.value)}
+          />
+          {errors.inputTitle && (
+            <span className="inputError">
+              Você precisa inserir o título da tarefa.
+            </span>
+          )}
+        </div>
+
+        <div className="inputWrapper">
+          <input
+            placeholder="Descrição"
+            name="description"
+            {...register("inputDescription", { required: true })}
+            onChange={(e) => setInputDescription(e.target.value)}
+          />
+          {errors.inputDescription && (
+            <span className="inputError">
+              Você precisa inserir a descrição da tarefa.
+            </span>
+          )}
+        </div>
+
+        <button type="submit">Enviar</button>
       </form>
 
       <div className="search-wrapper">
